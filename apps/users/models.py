@@ -4,7 +4,7 @@ from django.db import models
 
 class CustomUser(AbstractUser):
     groups = models.ManyToManyField(Group, related_name='custom_users', related_query_name='custom_user')
-    user_permissions = models.ManyToManyField(Permission, related_name='custom_users', related_query_name='custom_user')
+    user_permissions = models.ManyToManyField(Permission, blank=True)
 
     class Meta:
         verbose_name = 'Студент'
@@ -31,4 +31,3 @@ class Enrollment(models.Model):
 
     class Meta:
         verbose_name = 'Регистрация'
-        verbose_name_plural = 'Регистрации'

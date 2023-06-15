@@ -3,9 +3,11 @@ from .models import Category, Course, Lesson, Review
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    rating = serializers.DecimalField(max_digits=3, decimal_places=2, read_only=True)
+
     class Meta:
-        model = Category
-        fields = '__all__'
+        model = Course
+        fields = ['id', 'title', 'description', 'category', 'instructor', 'created_at', 'updated_at', 'rating']
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -21,6 +23,13 @@ class LessonSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        review = Review.objects.create(**validated_data)
+        course = review.course
+        course.update_rating()
+        return review
+
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ['id', 'course', 'user', 'comment', 'created_at', 'rating']
+
