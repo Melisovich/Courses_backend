@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from rest_framework import serializers
 from .models import Category, Course, Lesson, Review
 
@@ -23,13 +24,16 @@ class LessonSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    rating = serializers.IntegerField(validators=[
+        MinValueValidator(1, message='Рейтинг должен быть от 1 до 10.'),
+        MaxValueValidator(10, message='Рейтинг должен быть от 1 до 10.')
+    ])
+
     def create(self, validated_data):
         review = Review.objects.create(**validated_data)
-        course = review.course
-        course.update_rating()
+        review.update_rating()
         return review
 
     class Meta:
         model = Review
         fields = ['id', 'course', 'user', 'comment', 'created_at', 'rating']
-

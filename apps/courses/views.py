@@ -37,7 +37,23 @@ class ReviewListCreateView(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
+    def perform_create(self, serializer):
+        serializer.save()
+        course = serializer.validated_data['course']
+        course.update_rating()
+
 
 class ReviewRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+    def perform_update(self, serializer):
+        serializer.save()
+        course = serializer.validated_data['course']
+        course.update_rating()
+
+    def perform_destroy(self, instance):
+        course = instance.course
+        instance.delete()
+        course.update_rating()
+

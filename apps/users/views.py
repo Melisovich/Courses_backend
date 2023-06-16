@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .serializers import CustomUserSerializer, UserProfileSerializer
-from .models import CustomUser, UserProfile
+from .serializers import CustomUserSerializer, UserProfileSerializer, EnrollmentSerializer
+from .models import CustomUser, UserProfile, Enrollment
 
 
 class CustomUserListCreateView(generics.ListCreateAPIView):
@@ -21,3 +21,13 @@ class UserProfileListCreateView(generics.ListCreateAPIView):
 class UserProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+
+class EnrollmentListCreateView(generics.ListCreateAPIView):
+    queryset = Enrollment.objects.all()
+    serializer_class = EnrollmentSerializer
+
+
+class EnrollmentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Enrollment.objects.all()
+    serializer_class = EnrollmentSerializer

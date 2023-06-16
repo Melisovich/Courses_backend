@@ -23,9 +23,9 @@ INSTALLED_APPS = [
 ]
 
 JAZZMIN_SETTINGS = {
-    "site_title": "LinkUp",
-    "site_header": "LinkUp",
-    "site_brand": "LinkUp",
+    "site_title": "Courses",
+    "site_header": "Courses",
+    "site_brand": "Courses",
     "show_ui_builder": False,
     "changeform_format": "horizontal_tabs",
 }
