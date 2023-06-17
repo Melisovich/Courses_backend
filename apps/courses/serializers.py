@@ -7,14 +7,16 @@ class CategorySerializer(serializers.ModelSerializer):
     rating = serializers.DecimalField(max_digits=3, decimal_places=2, read_only=True)
 
     class Meta:
-        model = Course
-        fields = ['id', 'title', 'description', 'category', 'instructor', 'created_at', 'updated_at', 'rating']
+        model = Category
+        fields = ['id', 'name', 'rating']
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    rating = serializers.DecimalField(max_digits=3, decimal_places=2, read_only=True)
+
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = ['id', 'title', 'description', 'category', 'instructor', 'created_at', 'updated_at', 'rating']
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -31,7 +33,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         review = Review.objects.create(**validated_data)
-        review.update_rating()
+        review.course.calculate_rating()
         return review
 
     class Meta:

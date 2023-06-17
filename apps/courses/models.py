@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import Avg
 
 from apps.users.models import CustomUser
 
@@ -22,6 +23,13 @@ class Course(models.Model):
     instructor = models.ForeignKey('users.UserProfile', verbose_name='Инструктор', on_delete=models.CASCADE)
     created_at = models.DateTimeField(verbose_name='Создан в', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Обновлено в', auto_now=True)
+
+    def calculate_rating(self):
+        rating = self.review_set.aggregate(avg_rating=Avg('rating'))['avg_rating']
+        if rating is not None:
+            return round(rating, 2)
+        else:
+            return None
 
     class Meta:
         verbose_name = 'Курс'

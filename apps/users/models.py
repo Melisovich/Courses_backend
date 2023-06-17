@@ -32,3 +32,7 @@ class Enrollment(models.Model):
 
     class Meta:
         verbose_name = 'Регистрация'
+        verbose_name_plural = 'Регистрации'
+
+    def __str__(self):
+        return f'{self.user.username} - {self.course.title}'
