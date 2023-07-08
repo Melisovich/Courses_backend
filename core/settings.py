@@ -26,7 +26,7 @@ JAZZMIN_SETTINGS = {
     "site_title": "Courses",
     "site_header": "Courses",
     "site_brand": "Courses",
-    "show_ui_builder": False,
+    "show_ui_builder": True,
     "changeform_format": "horizontal_tabs",
 }
 
